@@ -40,17 +40,20 @@ class Home extends React.Component {
             <div>
                 {
                     (!isLoaded(profile))?(<div className = "load"><CircularProgress size={80} thickness={5} /></div>):(
-                        (!profile)?(<div>
-                                        <RaisedButton className="logButton" label='facebook'  onClick={()=> this.login('facebook')}/>
-                                        <RaisedButton className="logButton" label='google'  onClick={()=> this.login('google')}/>
-                                        <RaisedButton  style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
-                                        <RaisedButton className="logButton" label='github'  onClick={()=> this.login('github')} />
+                        (!profile)?(<div className="text-center">
+                                        <h4>Login options:</h4>
+                                        <RaisedButton primary={true} className="logButton" label='facebook'  onClick={()=> this.login('facebook')}/>
+                                        <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
+                                        <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
+                                        <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
                                     </div>
                                 ) :(
                         <div className="text-center">
-                            <h2>Hi, { profile&&profile.displayName}</h2>
+                            <h4>Hi, { profile&&profile.displayName}</h4>
                             <img src = {profile.avatarUrl} />
-                            <RaisedButton className="logButton"  label={'Logout from '+ profile.providerData[0].providerId}  onClick={this.logout}/>
+                            <div>
+                                <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile.providerData[0].providerId}  onClick={this.logout}/>
+                            </div>
                         </div>
                         )
                     )
