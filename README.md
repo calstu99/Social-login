@@ -8,7 +8,7 @@
 
 **Clone the project**. git clone https://github.com/polinazolotukhina/Social-login.git
 
-**Go to the folder **. cd SImple-to-do
+**Go to the folder **. cd Social-login
 
 **Install **. npm install
 
