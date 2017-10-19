@@ -6,7 +6,7 @@
 # SImple-to-do
 
 
-**Clone the project**. git clone https://github.com/polinazolotukhina/SImple-to-do.git
+**Clone the project**. git clone https://github.com/polinazolotukhina/Social-login.git
 
 **Go to the folder **. cd SImple-to-do
 
