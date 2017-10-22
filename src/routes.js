@@ -2,14 +2,16 @@ import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import App from './components/App';
 import Home from './containers/Home';
+import loginEmail from './components/loginEmail';
 import NotFoundPage from './components/NotFoundPage';
 
 
+
+
 export default (
-    <Router history={browserHistory}>
-        <Route path="/" component={App}>experiments
-            <IndexRoute component={Home} ignoreScrollBehavior />
-            <Route path="*" component={NotFoundPage} ignoreScrollBehavior/>
-        </Route>
-    </Router>
+    <Route path="/" component={App}>
+       <IndexRoute component={Home}/>
+       <Route path="/loginEmail" component={loginEmail}/>
+       <Route path="*" component={NotFoundPage}/>
+   </Route>
 );

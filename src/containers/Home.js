@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { getFirebase } from 'react-redux-firebase';
+import { browserHistory } from 'react-router';
 import ActionAndroid from 'material-ui/svg-icons/action/android';
 import FontAwesome from 'react-fontawesome';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -46,6 +47,7 @@ class Home extends React.Component {
                                         <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
                                         <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
                                         <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
+                                        <RaisedButton label="Login in with email" onClick={()=>{browserHistory.push('/loginEmail')}} />
                                     </div>
                                 ) :(
                         <div className="text-center">
