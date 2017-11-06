@@ -1,10 +1,13 @@
 import React from 'react';
-import UserForm from './UserForm';
-// import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import {
-   getFirebase
+   getFirebase,
+   firebaseConnect,
+   pathToJS,
  } from 'react-redux-firebase';
-
+ import { compose } from 'redux';
+ import { connect } from 'react-redux';
+ import UserForm from '../components/UserForm';
 
 
 class SingUp extends React.Component {
@@ -21,8 +24,7 @@ class SingUp extends React.Component {
       const firebase = getFirebase();
       firebase.createUser(
           { email, password },
-          { username, email },
-          { password, username },
+          { username, email }
       )
     //   .then(() => {
     //     browserHistory.push('/');
@@ -34,13 +36,22 @@ class SingUp extends React.Component {
 
 
   render() {
+    const { authError } = this.props;
     return (
     <div>
       <UserForm onSubmit={(this.createNewUser)} label="Sing Up" />
-      <h1>{this.state.error}</h1>
+      <h1 className="text-center">{this.state.error}</h1>
+      <h3 className="text-center">{authError&&authError.message}</h3>
     </div>
   );
   }
 }
 
-export default SingUp;
+export default compose(
+  firebaseConnect(),
+  connect(
+    (state) => ({
+        authError: pathToJS(state.firebase, 'authError'),
+    })
+  )
+)(SingUp)

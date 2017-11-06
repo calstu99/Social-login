@@ -31,13 +31,6 @@ class Home extends React.Component {
     }
     render() {
         const { profile } = this.props;
-        console.log("HOME AUTH - profile", profile )
-
-        // <div>
-        //     <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile&&profile.providerData[0].providerId}  onClick={this.logout}/>
-        // </div>
-
-
         return (
             <div>
                 {

@@ -46,7 +46,7 @@ const renderTextField = ({
 class UserForm extends React.Component {
     constructor(props){
          super(props);
-            this.state = { index: 0}
+            this.state = { index: 0};
        }
 render() {
 
@@ -82,7 +82,7 @@ render() {
       </div>
     </form>
 </div>
-  )
+  );
 }
 }
 export default reduxForm({
