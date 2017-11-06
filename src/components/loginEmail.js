@@ -1,90 +1,38 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import TextField from 'material-ui/TextField';
-import asyncValidate from './asyncValidate';
+import UserForm from './UserForm';
+import { browserHistory } from 'react-router';
+import {
+   getFirebase
+ } from 'react-redux-firebase';
 
-
-
-
-
-const validate = values => {
-  const errors = {}
-  const requiredFields = [
-    'email',
-    'password',
-
-  ]
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
-    }
-  })
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address'
-  }
-  return errors
-}
-
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) =>
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-  />
-
-
-
-
-class loginEmail extends React.Component {
+class LoginEmail extends React.Component {
     constructor(props){
-         super(props);
-            this.state = { index: 0}
-       }
+     super(props);
+      this.state = {error:''};
+       this.login = this.login.bind(this);
+
+    }
+  login(values) {
+      const firebase = getFirebase();
+      firebase.login(values)
+      .then(() => {
+        browserHistory.push('/')
+      })
+      .catch(() => {
+            this.setState({ error: 'Authentication failed' });
+            });
+  }
 
 
-
-render() {
-
-  const { handleSubmit, pristine, reset, submitting, actions, formprops, post } = this.props;
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <Field
-          name="email"
-          component={renderTextField}
-          label="Email"
-        />
-      </div>
-      <div>
-        <Field name="password" component={renderTextField} label="Password" />
-      </div>
-      <div>
-        <button type="submit" disabled={pristine || submitting}>
-          Login
-        </button>
-        <button type="submit" disabled={pristine || submitting}>
-          Sing Up
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
-      </div>
-    </form>
-  )
+  render() {
+    return (
+    <div>
+      <UserForm onSubmit={this.login} label="login" />
+      <h5>Do not have an account? <button onClick={()=>{browserHistory.push('/singup')}}>Sing Up&Login</button></h5>
+      <h1>{this.state.error}</h1>
+    </div>
+  );
+  }
 }
-}
-export default reduxForm({
-  form: 'AddPost', // a unique identifier for this form
-  validate,
-  asyncValidate
-})(loginEmail)
+
+export default LoginEmail;

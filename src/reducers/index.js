@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import appReducer from './reducer';
-import todoReducer from './todoReducer';
-import { firebaseStateReducer } from 'react-redux-firebase'
+import { firebaseStateReducer } from 'react-redux-firebase';
+import { reducer as formReducer } from 'redux-form';
 
 
 const rootReducer = combineReducers({
-    todo:todoReducer,
     routing: routerReducer,
-    firebase: firebaseStateReducer
+    firebase: firebaseStateReducer,
+    form: formReducer
 });
 
 export default rootReducer;

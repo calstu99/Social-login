@@ -1,8 +1,9 @@
 import React from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import {  Route, IndexRoute } from 'react-router';
 import App from './components/App';
 import Home from './containers/Home';
-import loginEmail from './components/loginEmail';
+import LoginEmail from './components/LoginEmail';
+import SingUp from './components/SingUp';
 import NotFoundPage from './components/NotFoundPage';
 
 
@@ -11,7 +12,8 @@ import NotFoundPage from './components/NotFoundPage';
 export default (
     <Route path="/" component={App}>
        <IndexRoute component={Home}/>
-       <Route path="/loginEmail" component={loginEmail}/>
+       <Route path="/loginEmail" component={LoginEmail}/>
+       <Route path="/singUp" component={SingUp}/>
        <Route path="*" component={NotFoundPage}/>
    </Route>
 );

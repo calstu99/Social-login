@@ -1,19 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import { getFirebase } from 'react-redux-firebase';
 import { browserHistory } from 'react-router';
-import ActionAndroid from 'material-ui/svg-icons/action/android';
-import FontAwesome from 'react-fontawesome';
 import CircularProgress from 'material-ui/CircularProgress';
 import { compose } from 'redux';
 import {
    firebaseConnect,
    isLoaded,
-   isEmpty,
-   dataToJS,
-   pathToJS
+   pathToJS,
+   getFirebase
  } from 'react-redux-firebase';
 
 
@@ -27,16 +22,22 @@ class Home extends React.Component {
         firebase.login({
            provider: provider,
            type: 'redirect'
-         })
+       });
 
     }
     logout(){
          const firebase = getFirebase();
-         firebase.logout()
+         firebase.logout();
     }
     render() {
-        const { auth, profile } = this.props;
-        console.log("HOME AUTH", profile )
+        const { profile } = this.props;
+        console.log("HOME AUTH - profile", profile )
+
+        // <div>
+        //     <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile&&profile.providerData[0].providerId}  onClick={this.logout}/>
+        // </div>
+
+
         return (
             <div>
                 {
@@ -47,24 +48,28 @@ class Home extends React.Component {
                                         <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
                                         <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
                                         <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
-                                        <RaisedButton label="Login in with email" onClick={()=>{browserHistory.push('/loginEmail')}} />
+                                        <RaisedButton label="Login in with email" onClick={()=>{browserHistory.push('/loginEmail'); }} />
                                     </div>
                                 ) :(
-                        <div className="text-center">
-                            <h4>Hi, { profile&&profile.displayName}</h4>
-                            <img src = {profile.avatarUrl} />
-                            <div>
-                                <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile.providerData[0].providerId}  onClick={this.logout}/>
-                            </div>
-                        </div>
-                        )
+                        (!profile.displayName)?
+                         (
+                             <div className="text-center">
+                                <h4>hi, {profile.username}</h4>
+                                <RaisedButton primary={true} className="logButton"  label={'Logout'}  onClick={this.logout}/>
+
+                            </div>):
+                        (
+                            <div className="text-center">
+                                 <h4>Hi, { profile&&profile.displayName}</h4>
+                                 <img src = {profile.avatarUrl} />
+                                 <div>
+                                     <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile&&profile.providerData[0].providerId}  onClick={this.logout}/>
+                                 </div>
+
+                         </div>)
                     )
-
+)
                 }
-
-
-
-
             </div>
         );
     }
