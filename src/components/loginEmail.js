@@ -28,7 +28,7 @@ class LoginEmail extends React.Component {
     return (
     <div>
       <UserForm onSubmit={this.login} label="login" />
-      <h5>Do not have an account? <button onClick={()=>{browserHistory.push('/singup')}}>Sing Up&Login</button></h5>
+      <h5 className="text-center">Do not have an account? <button onClick={()=>{browserHistory.push('/singup')}}>Sing Up&Login</button></h5>
       <h1>{this.state.error}</h1>
     </div>
   );

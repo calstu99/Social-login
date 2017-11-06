@@ -52,7 +52,7 @@ render() {
 
   const { handleSubmit, pristine, reset, submitting, label} = this.props;
   return (
-<div>
+<div className="text-center">
 <h2> {label} </h2>
     <form onSubmit={handleSubmit}>
       <div>

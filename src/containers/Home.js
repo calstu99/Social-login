@@ -48,7 +48,7 @@ class Home extends React.Component {
                                         <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
                                         <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
                                         <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
-                                        <RaisedButton label="Login in with email" onClick={()=>{browserHistory.push('/loginEmail'); }} />
+                                        <RaisedButton primary={true} label="Email" onClick={()=>{browserHistory.push('/loginEmail'); }} />
                                     </div>
                                 ) :(
                         (!profile.displayName)?

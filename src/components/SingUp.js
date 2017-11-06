@@ -1,6 +1,6 @@
 import React from 'react';
 import UserForm from './UserForm';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import {
    getFirebase
  } from 'react-redux-firebase';
