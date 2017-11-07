@@ -1,16 +1,17 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import {
    getFirebase,
    firebaseConnect,
    pathToJS,
+   isLoaded,
  } from 'react-redux-firebase';
  import { compose } from 'redux';
  import { connect } from 'react-redux';
+  import CircularProgress from 'material-ui/CircularProgress';
  import UserForm from '../components/UserForm';
 
 
-class SingUp extends React.Component {
+class SignUp extends React.Component {
     constructor(props){
      super(props);
      this.state = {error:''};
@@ -36,12 +37,26 @@ class SingUp extends React.Component {
 
 
   render() {
-    const { authError } = this.props;
+    const { authError, profile } = this.props;
     return (
     <div>
-      <UserForm onSubmit={(this.createNewUser)} label="Sing Up" />
-      <h1 className="text-center">{this.state.error}</h1>
-      <h3 className="text-center">{authError&&authError.message}</h3>
+    {
+                (!isLoaded(profile))?(<div className = "load"><CircularProgress size={80} thickness={5} /></div>):(
+                    (!profile)?
+                    (
+                        <div>
+                            <UserForm onSubmit={(this.createNewUser)} label="Sign Up" />
+                            <h1 className="text-center">{this.state.error}</h1>
+                            <h3 className="text-center">{authError&&authError.message}</h3>
+                        </div>
+                    ):(
+                        <div>
+                            <h1 className="text-center">Hi, {profile&&profile.username}</h1>
+                        </div>
+                    )
+
+                )
+            }
     </div>
   );
   }
@@ -52,6 +67,7 @@ export default compose(
   connect(
     (state) => ({
         authError: pathToJS(state.firebase, 'authError'),
+        profile: pathToJS(state.firebase, 'profile')
     })
   )
-)(SingUp)
+)(SignUp)
