@@ -13,10 +13,6 @@ import {
 
 
 class Home extends React.Component {
-    constructor(props){
-     super(props);
-    }
-
     login(provider) {
         const firebase = getFirebase();
         firebase.login({
@@ -29,39 +25,57 @@ class Home extends React.Component {
          const firebase = getFirebase();
          firebase.logout();
     }
+    checkProfile(){
+        const { profile } = this.props;
+        if(!profile){
+            return (
+                    <div className="text-center">
+                        <h4>Login options:</h4>
+                        <RaisedButton primary={true} className="logButton" label='facebook'  onClick={()=> this.login('facebook')}/>
+                        <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
+                        <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
+                        <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
+                        <RaisedButton primary={true} label="Email" onClick={()=>{browserHistory.push('/loginEmail'); }} />
+                    </div>
+            );
+        } else {
+            if(!profile.displayName){
+                return (
+                    <div className="text-center">
+                       <h4>hi, {profile.username}</h4>
+                       <RaisedButton primary={true} className="logButton"  label={'Logout'}  onClick={this.logout}/>
+                   </div>
+                );
+            }else{
+                return (
+                    <div className="text-center">
+                         <h4>Hi, { profile&&profile.displayName}</h4>
+                         <img src = {profile.avatarUrl} />
+                         <div>
+                             <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile&&profile.providerData[0].providerId}  onClick={this.logout}/>
+                         </div>
+
+                    </div>
+                );
+            }
+        }
+
+    }
     render() {
         const { profile } = this.props;
         return (
             <div>
                 {
-                    (!isLoaded(profile))?(<div className = "load"><CircularProgress size={80} thickness={5} /></div>):(
-                        (!profile)?(<div className="text-center">
-                                        <h4>Login options:</h4>
-                                        <RaisedButton primary={true} className="logButton" label='facebook'  onClick={()=> this.login('facebook')}/>
-                                        <RaisedButton primary={true} className="logButton" label='google'  onClick={()=> this.login('google')}/>
-                                        <RaisedButton primary={true} style={{backgroundColor:'red'}} className="logButton" label='tweeter'  onClick={()=> this.login('twitter')}/>
-                                        <RaisedButton primary={true} className="logButton" label='github'  onClick={()=> this.login('github')} />
-                                        <RaisedButton primary={true} label="Email" onClick={()=>{browserHistory.push('/loginEmail'); }} />
-                                    </div>
-                                ) :(
-                        (!profile.displayName)?
-                         (
-                             <div className="text-center">
-                                <h4>hi, {profile.username}</h4>
-                                <RaisedButton primary={true} className="logButton"  label={'Logout'}  onClick={this.logout}/>
-
-                            </div>):
-                        (
-                            <div className="text-center">
-                                 <h4>Hi, { profile&&profile.displayName}</h4>
-                                 <img src = {profile.avatarUrl} />
-                                 <div>
-                                     <RaisedButton primary={true} className="logButton"  label={'Logout from '+ profile&&profile.providerData[0].providerId}  onClick={this.logout}/>
-                                 </div>
-
-                         </div>)
+                    (!isLoaded(profile)
+                    )?(
+                        <div className = "load">
+                            <CircularProgress size={80} thickness={5} />
+                        </div>
+                    ):(
+                         <div>
+                            {this.checkProfile()}
+                        </div>
                     )
-)
                 }
             </div>
         );
